@@ -1,0 +1,9 @@
+z:\igmprofile\documents\visual studio 2015\Projects\ALinkToTheList\ALinkToTheList\bin\Debug\ALinkToTheList.exe.config
+z:\igmprofile\documents\visual studio 2015\Projects\ALinkToTheList\ALinkToTheList\bin\Debug\ALinkToTheList.exe
+z:\igmprofile\documents\visual studio 2015\Projects\ALinkToTheList\ALinkToTheList\bin\Debug\ALinkToTheList.pdb
+z:\igmprofile\documents\visual studio 2015\Projects\ALinkToTheList\ALinkToTheList\obj\Debug\ALinkToTheList.csprojResolveAssemblyReference.cache
+z:\igmprofile\documents\visual studio 2015\Projects\ALinkToTheList\ALinkToTheList\obj\Debug\ALinkToTheList.exe
+z:\igmprofile\documents\visual studio 2015\Projects\ALinkToTheList\ALinkToTheList\obj\Debug\ALinkToTheList.pdb
+D:\Profiles\nat7611\Source\Repos\IGME-106-05\ALinkToTheList\ALinkToTheList\bin\Debug\ALinkToTheList.exe.config
+D:\Profiles\nat7611\Source\Repos\IGME-106-05\ALinkToTheList\ALinkToTheList\obj\Debug\ALinkToTheList.exe
+D:\Profiles\nat7611\Source\Repos\IGME-106-05\ALinkToTheList\ALinkToTheList\obj\Debug\ALinkToTheList.pdb
