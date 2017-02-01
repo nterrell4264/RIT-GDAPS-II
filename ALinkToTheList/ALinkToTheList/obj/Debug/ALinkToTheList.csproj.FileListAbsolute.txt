@@ -7,3 +7,6 @@ z:\igmprofile\documents\visual studio 2015\Projects\ALinkToTheList\ALinkToTheLis
 D:\Profiles\nat7611\Source\Repos\IGME-106-05\ALinkToTheList\ALinkToTheList\bin\Debug\ALinkToTheList.exe.config
 D:\Profiles\nat7611\Source\Repos\IGME-106-05\ALinkToTheList\ALinkToTheList\obj\Debug\ALinkToTheList.exe
 D:\Profiles\nat7611\Source\Repos\IGME-106-05\ALinkToTheList\ALinkToTheList\obj\Debug\ALinkToTheList.pdb
+D:\Profiles\nat7611\Source\Repos\IGME-106-05\ALinkToTheList\ALinkToTheList\bin\Debug\ALinkToTheList.exe
+D:\Profiles\nat7611\Source\Repos\IGME-106-05\ALinkToTheList\ALinkToTheList\bin\Debug\ALinkToTheList.pdb
+D:\Profiles\nat7611\Source\Repos\IGME-106-05\ALinkToTheList\ALinkToTheList\obj\Debug\ALinkToTheList.csprojResolveAssemblyReference.cache

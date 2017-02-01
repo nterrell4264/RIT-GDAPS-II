@@ -17,6 +17,7 @@ namespace ALinkToTheList
         {
             get
             {
+                if (index < 0 || index > this.count) throw new ArgumentOutOfRangeException();
                 Node<T> slot = head;
                 for(int i = 0; i < index; i++)
                 {
@@ -53,10 +54,32 @@ namespace ALinkToTheList
             count++;
         }
 
+        public T Remove(int index)
+        {
+            T toss;
+            if (index < 0 || index > this.count) throw new ArgumentOutOfRangeException();
+            Node<T> slot = head;
+            for (int i = 0; i < index - 1; i++) //Moves to index before desired spot
+            {
+                slot = slot.Next;
+            }
+            if (count == 1)
+            {
+                toss = head.Data;
+            }
+            else toss = slot.Next.Data;
+            if (index == 0) head = slot.Next; //Moves head if removed element is first
+            if (index == count - 1) slot.Next = null; //Doesn't link to slot after removed if it doesn't exist
+            else slot.Next = slot.Next.Next;
+            count--;
+            return toss;
+        }
+
         public override string ToString()
         {
-            String result = head.ToString() + ", ";
-            for (int i = 1; i < count - 1; i++) result += this[i].ToString() + ", ";
+            if (count == 0) return "";
+            String result = "";
+            for (int i = 0; i < count - 1; i++) result += this[i].ToString() + ", ";
             result += this[this.count - 1].ToString();
             return result;
         }

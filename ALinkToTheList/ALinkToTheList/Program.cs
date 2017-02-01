@@ -16,13 +16,21 @@ namespace ALinkToTheList
             nums.Add(123);
             nums.Add(9001);
             nums.Add(0);
+            Console.WriteLine(nums.ToString());
 
+            nums.Remove(3);
+            nums.Remove(0);
             Console.WriteLine(nums.ToString());
 
             LinkedList<float> flots = new LinkedList<float>();
             flots.Add(42);
             flots.Add(64);
+            Console.WriteLine(flots.ToString());
 
+            flots.Remove(1);
+            Console.WriteLine(flots.ToString());
+
+            flots.Remove(0);
             Console.WriteLine(flots.ToString());
         }
     }
