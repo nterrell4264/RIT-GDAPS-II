@@ -21,8 +21,9 @@ namespace PriorityQQ
             queue.Enqueue(4);
             queue.Enqueue(602);
             queue.Enqueue(0);
-            int times = queue.Count;
-            for (int i = 0; i < times; i++) Console.WriteLine(queue.Dequeue());
+            while(queue.Count > 0) Console.WriteLine(queue.Dequeue());
+            queue.Enqueue(7);
+            while (queue.Count > 0) Console.WriteLine(queue.Dequeue());
         }
     }
 }
