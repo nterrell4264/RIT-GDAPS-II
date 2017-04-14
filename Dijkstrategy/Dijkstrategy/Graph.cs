@@ -8,7 +8,7 @@ namespace Dijkstrategy
 {
     class Graph
     {
-        Dictionary<string, Vertex> vertices;
+        public Dictionary<string, Vertex> vertices;
         List<string> vertexIndices;
         int[][] weights;
 
