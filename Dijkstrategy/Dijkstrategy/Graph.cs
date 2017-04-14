@@ -8,9 +8,8 @@ namespace Dijkstrategy
 {
     class Graph
     {
-        int[][] matrix;
-        Dictionary<string, Vertex> vertexNames;
-        List<Vertex> vertexIndices;
+        Dictionary<string, Vertex> vertices;
+        int[][] weights;
 
         int pathLength; //Current length, used for pathfinding
         List<Vertex> path; //Final path
@@ -20,54 +19,52 @@ namespace Dijkstrategy
             SetUpVertices();
             pathLength = 0;
             path = new List<Vertex>();
-            path.Add(vertexIndices[0]);
+            path.Add(vertices["Hub"]);
         }
 
         public void Reset()
         {
-            foreach (Vertex vertex in vertexIndices) vertex.completed = false;
+            foreach (Vertex vertex in vertices.Values) vertex.completed = false;
             pathLength = 0;
             path = new List<Vertex>();
-            path.Add(vertexIndices[0]);
+            path.Add(vertices["Hub"]);
         }
 
         public void ShortestPath()
         {
-
+            Vertex nextVertex = path[0];
+            while(nextVertex != null)
+            {
+                nextVertex = GetAdjacentUnvisited(path[path.Count - 1].Name);
+                pathLength = pathLength + matrix[vertexIndices.IndexOf(path[path.Count - 1])][vertexIndices.IndexOf(nextVertex)];
+            }
         }
 
         public Vertex GetAdjacentUnvisited(String name)
         {
-            Vertex vertex = vertexNames[name];
-            int index = vertexIndices.IndexOf(vertex); //Index of the matrix within vertexNames and thus also the adjacency matrix
-            for (int i = 0; i < matrix[index].Length; i++)
+            Vertex vertex = vertices[name];
+            foreach(string neighbor in vertex.adjacencies)
             {
-                if (i >= index) { //Finds which vertex this is, and the matrix skips self-comparison
-                    Vertex adjacent = vertexIndices[i + 1];
-                }
-                else {
-                    Vertex adjacent = vertexIndices[i];
-                }
-                if (matrix[index][i] != -1 && !vertex.completed) return vertex;
+
             }
             return null;
         }
 
         private void SetUpVertices()
         {
-            matrix = new int[4][];
-            matrix[0] = new int[] { 2, 3, -1, 9};
-            matrix[1] = new int[] { -1, 2, 5, -1};
-            matrix[2] = new int[] { -1, -1, 4, 6};
-            matrix[3] = new int[] { -1, -1, -1, 3};
-            vertexIndices = new List<Vertex>();
-            vertexIndices.Add(new Vertex("Dragons' Sky"));
-            vertexIndices.Add(new Vertex("Invisible"));
-            vertexIndices.Add(new Vertex("Hub"));
-            vertexIndices.Add(new Vertex("Undead"));
-            vertexIndices.Add(new Vertex("???"));
-            vertexNames = new Dictionary<string, Vertex>();
-            foreach (Vertex vertex in vertexIndices) vertexNames.Add(vertex.Name, vertex);
+            vertices.Add("Hub", new Vertex("Hub", new List<string> { "Invisible", "Dragons' Sky", "Virtual", "Undead"}));
+            vertices.Add("Invisible", new Vertex("Invisible", new List<string> { "Hub", "Dragon's Sky", "Virtual"}));
+            vertices.Add("Dragons' Sky", new Vertex("Dragons' Sky", new List<string> { "Hub", "Invisible"}));
+            vertices.Add("Virtual", new Vertex("Virtual", new List<string> { "Hub", "Undead", "Invisible", "???"}));
+            vertices.Add("Undead", new Vertex("Undead", new List<string> { "Hub", "Virtual", "???"}));
+            vertices.Add("???", new Vertex("???", new List<string> { "Virtual", "Undead"}));
+            weights = new int[6][];
+            weights[0] = new int[] { 3, 7, 2, 5};
+            weights[1] = new int[] { 3, 3, 9};
+            weights[2] = new int[] { 7, 3};
+            weights[3] = new int[] { 2, 4, 9, 11};
+            weights[4] = new int[] { 5, 4, 4};
+            weights[5] = new int[] { 11, 4};
         }
     }
 }
