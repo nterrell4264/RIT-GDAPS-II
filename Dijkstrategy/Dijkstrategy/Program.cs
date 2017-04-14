@@ -11,6 +11,7 @@ namespace Dijkstrategy
         static void Main(string[] args)
         {
             Graph graph = new Graph();
+            graph.ShortestPath("???");
         }
     }
 }

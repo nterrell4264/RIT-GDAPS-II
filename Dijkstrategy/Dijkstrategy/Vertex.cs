@@ -9,8 +9,11 @@ namespace Dijkstrategy
     class Vertex
     {
         public string Name { get; private set; }
-        public bool completed; //Whether the vertex's inclusion/exclusion is finalized
         public List<string> adjacencies;
+
+        public bool completed; //Whether the vertex's inclusion/exclusion is finalized
+        public Vertex nearestNeighbor;
+        public int distance; //distance from source node
 
         //Constructor
         public Vertex(string name, List<string> neighbors)

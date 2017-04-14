@@ -12,7 +12,7 @@ namespace ALinkBetweenList
         private Node<T> head;
         private Node<T> tail;
         private int count;
-        private Node<T> slot; //Used for counting
+        private Node<T> slot = null; //Used for counting
 
         //Properties
         public T this[int index]
@@ -108,7 +108,7 @@ namespace ALinkBetweenList
             } else
             {
                 slot = head;
-                for (int i = 1; i < index; i++) slot = slot.Next;
+                for (int i = 0; i < index; i++) slot = slot.Next;
                 result = slot.Data;
                 slot.Prev.Next = slot.Next;
                 slot.Next.Prev = slot.Prev;

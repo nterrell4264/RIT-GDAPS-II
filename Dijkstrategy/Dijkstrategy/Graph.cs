@@ -9,55 +9,83 @@ namespace Dijkstrategy
     class Graph
     {
         Dictionary<string, Vertex> vertices;
+        List<string> vertexIndices;
         int[][] weights;
-
-        int pathLength; //Current length, used for pathfinding
-        List<Vertex> path; //Final path
 
         public Graph()
         {
             SetUpVertices();
-            pathLength = 0;
-            path = new List<Vertex>();
-            path.Add(vertices["Hub"]);
         }
 
         public void Reset()
         {
-            foreach (Vertex vertex in vertices.Values) vertex.completed = false;
-            pathLength = 0;
-            path = new List<Vertex>();
-            path.Add(vertices["Hub"]);
-        }
-
-        public void ShortestPath()
-        {
-            Vertex nextVertex = path[0];
-            while(nextVertex != null)
+            foreach (Vertex vertex in vertices.Values)
             {
-                nextVertex = GetAdjacentUnvisited(path[path.Count - 1].Name);
-                pathLength = pathLength + matrix[vertexIndices.IndexOf(path[path.Count - 1])][vertexIndices.IndexOf(nextVertex)];
+                vertex.completed = false;
+                vertex.nearestNeighbor = null;
+                vertex.distance = 0;
             }
         }
 
-        public Vertex GetAdjacentUnvisited(String name)
+        public void ShortestPath(string start)
         {
-            Vertex vertex = vertices[name];
+            Stack<Vertex> currentPath = new Stack<Vertex>();
+            Vertex currentVertex = vertices[start];
+            Vertex nextVertex = GetAdjacentUnvisited(currentVertex);
+            while (currentPath.Count > 0)
+            {
+                while (nextVertex != null) {
+                    int distance = weights[vertexIndices.IndexOf(currentVertex.Name)][vertexIndices.IndexOf(nextVertex.Name)];
+                    if (Math.Min(nextVertex.distance, currentVertex.distance + distance) != nextVertex.distance)
+                    {
+                        nextVertex.distance = currentVertex.distance + distance;
+                        nextVertex.nearestNeighbor = currentVertex;
+                    }
+                    currentPath.Push(currentVertex);
+                    currentVertex = nextVertex;
+                    nextVertex = GetAdjacentUnvisited(currentVertex);
+                }
+                currentVertex.completed = true;
+                currentPath.Pop();
+                currentVertex = currentPath.Peek();
+                nextVertex = GetAdjacentUnvisited(currentVertex);
+            }
+        }
+
+        public Vertex GetAdjacentUnvisited(Vertex vertex)
+        {
             foreach(string neighbor in vertex.adjacencies)
             {
-
+                if (!vertices[neighbor].completed) return vertices[neighbor];
             }
             return null;
         }
 
+        private int CurrentPathLength(Stack<Vertex> stack)
+        {
+            Vertex[] stackArray= stack.ToArray();
+            int result = 0;
+            for (int i = 0; i < stackArray.Length - 1; i++)
+                result += weights[vertexIndices.IndexOf(stackArray[i].Name)][vertexIndices.IndexOf(stackArray[i+1].Name)];
+            return result;
+        }
+
         private void SetUpVertices()
         {
+            vertices = new Dictionary<string, Vertex>();
             vertices.Add("Hub", new Vertex("Hub", new List<string> { "Invisible", "Dragons' Sky", "Virtual", "Undead"}));
             vertices.Add("Invisible", new Vertex("Invisible", new List<string> { "Hub", "Dragon's Sky", "Virtual"}));
             vertices.Add("Dragons' Sky", new Vertex("Dragons' Sky", new List<string> { "Hub", "Invisible"}));
             vertices.Add("Virtual", new Vertex("Virtual", new List<string> { "Hub", "Undead", "Invisible", "???"}));
             vertices.Add("Undead", new Vertex("Undead", new List<string> { "Hub", "Virtual", "???"}));
             vertices.Add("???", new Vertex("???", new List<string> { "Virtual", "Undead"}));
+            vertexIndices = new List<string>();
+            vertexIndices.Add("Hub");
+            vertexIndices.Add("Invisible");
+            vertexIndices.Add("Dragons' Sky");
+            vertexIndices.Add("Virtual");
+            vertexIndices.Add("Undead");
+            vertexIndices.Add("???");
             weights = new int[6][];
             weights[0] = new int[] { 3, 7, 2, 5};
             weights[1] = new int[] { 3, 3, 9};
