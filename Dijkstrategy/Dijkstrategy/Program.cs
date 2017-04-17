@@ -12,7 +12,11 @@ namespace Dijkstrategy
         {
             Graph graph = new Graph();
             graph.ShortestPath("???");
-            string input;
+            foreach(Vertex vertex in graph.vertices.Values)
+            {
+                Console.WriteLine(vertex.Name + ": Nearest neighbor is " + vertex.nearestNeighbor.Name + " with distance " + (vertex.distance - vertex.nearestNeighbor.distance));
+            }
+            /*string input;
             string room1 = "";
             string room2 = "";
             List<Vertex> path1;
@@ -32,7 +36,8 @@ namespace Dijkstrategy
                         break;
                     }
                 }
-                if (!room1.Equals(""))
+                if (room1.Equals("")) Console.WriteLine("That is not a valid room in the zoo.");
+                else
                 {
                     input = Console.ReadLine();
                     foreach (string room in graph.vertices.Keys)
@@ -46,11 +51,10 @@ namespace Dijkstrategy
                     if(room2.Equals("")) Console.WriteLine("That is not a valid room in the zoo.");
                     else
                     {
-                        while(room1)
+                        
                     }
                 }
-                else Console.WriteLine("That is not a valid room in the zoo.");
-            }
+            }*/
         }
     }
 }

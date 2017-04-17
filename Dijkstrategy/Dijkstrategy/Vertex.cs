@@ -21,6 +21,7 @@ namespace Dijkstrategy
             Name = name;
             adjacencies = neighbors;
             completed = false;
+            distance = int.MaxValue;
         }
     }
 }

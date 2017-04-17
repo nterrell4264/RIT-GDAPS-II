@@ -23,7 +23,7 @@ namespace Dijkstrategy
             {
                 vertex.completed = false;
                 vertex.nearestNeighbor = null;
-                vertex.distance = 0;
+                vertex.distance = int.MaxValue;
             }
         }
 
@@ -31,25 +31,25 @@ namespace Dijkstrategy
         {
             Stack<Vertex> currentPath = new Stack<Vertex>();
             Vertex currentVertex = vertices[start];
-            Vertex nextVertex = GetAdjacentUnvisited(currentVertex);
-            while (currentPath.Count > 0)
+            Vertex nextVertex;
+            do
             {
-                while (nextVertex != null) {
-                    int distance = weights[vertexIndices.IndexOf(currentVertex.Name)][vertexIndices.IndexOf(nextVertex.Name)];
+                currentPath.Push(currentVertex);
+                foreach (string neighbor in currentVertex.adjacencies)
+                {
+                    nextVertex = vertices[neighbor];
+                    int distance = weights[vertexIndices.IndexOf(currentVertex.Name)][currentVertex.adjacencies.IndexOf(neighbor)];
                     if (Math.Min(nextVertex.distance, currentVertex.distance + distance) != nextVertex.distance)
                     {
                         nextVertex.distance = currentVertex.distance + distance;
                         nextVertex.nearestNeighbor = currentVertex;
                     }
-                    currentPath.Push(currentVertex);
-                    currentVertex = nextVertex;
-                    nextVertex = GetAdjacentUnvisited(currentVertex);
                 }
                 currentVertex.completed = true;
+                currentVertex = GetAdjacentUnvisited(currentVertex);
                 currentPath.Pop();
                 currentVertex = currentPath.Peek();
-                nextVertex = GetAdjacentUnvisited(currentVertex);
-            }
+            } while (currentPath.Count > 0);
         }
 
         public Vertex GetAdjacentUnvisited(Vertex vertex)
