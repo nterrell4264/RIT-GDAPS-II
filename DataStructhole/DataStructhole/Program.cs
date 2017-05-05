@@ -13,7 +13,7 @@ namespace DataStructhole
         {
             for(int i = 0; i < 14; i++) {
                 PegPuzzle puzzle = new PegPuzzle(i);
-                Thread thread = new Thread(new ThreadStart(puzzle.SolvePuzzle));
+                Thread thread = new Thread(new ThreadStart(puzzle.Solve));
                 thread.Start();
             };
         }
