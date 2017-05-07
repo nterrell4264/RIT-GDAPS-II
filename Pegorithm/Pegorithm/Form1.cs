@@ -20,18 +20,20 @@ namespace Pegorithm
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            List<PegPuzzle> puzzles = new List<PegPuzzle>();
-            for (int i = 0; i < 14; i++)
+            List<Tuple<PegPuzzle, Thread>> puzzles = new List<Tuple<PegPuzzle, Thread>>();
+            for (int i = 0; i < 15; i++)
             {
-                puzzles.Add(new PegPuzzle(i));
-                Thread thread = new Thread(new ThreadStart(puzzles[i].SolvePuzzle));
+                PegPuzzle puzzle = new PegPuzzle(i);
+                Thread thread = new Thread(new ThreadStart(puzzle.Solve));
                 thread.Start();
+                puzzles.Add(new Tuple<PegPuzzle, Thread>(puzzle, thread));
             };
-            foreach(PegPuzzle puzzle in puzzles)
+            foreach(Tuple<PegPuzzle, Thread> puzzle in puzzles)
             {
-                lock ()
+                puzzle.Item2.Join();
+                lock (PegPuzzle.consoleLock)
                 {
-                    txtResult.Text += puzzle.SolutionString();
+                    txtResult.Text += puzzle.Item1.SolutionString();
                 }
             }
         }

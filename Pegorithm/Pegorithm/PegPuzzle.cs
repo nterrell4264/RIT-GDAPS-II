@@ -13,19 +13,31 @@ namespace Pegorithm
         public Stack<Tuple<Peg, Peg>> solution { get; private set; }
         private List<Peg> empties;
         private int emptyHole;
+        public static object consoleLock;
+
+        static PegPuzzle()
+        {
+            consoleLock = new object();
+        }
 
         public PegPuzzle(int startEmpty)
         {
             pegs = CreatePuzzle();
             solution = new Stack<Tuple<Peg, Peg>>();
+            emptyHole = startEmpty;
             empties = new List<Peg>();
-            empties.Add(pegs[startEmpty]);
+            empties.Add(pegs[emptyHole]);
             empties[0].empty = true;
         }
 
-        public void SolvePuzzle()
+        public void Solve()
         {
-            if (solution.Count < 14)
+            this.SolvePuzzle();
+        }
+
+        private bool SolvePuzzle()
+        {
+            if (solution.Count < 13)
             {
                 //foreach (Peg emptyPeg in empties)
                 for (int i = 0; i < empties.Count; i++)
@@ -33,7 +45,7 @@ namespace Pegorithm
                         if (ValidMove(adjacent, empties[i]))
                         {
                             PerformMove(adjacent, empties[i]);
-                            SolvePuzzle();
+                            if (SolvePuzzle()) return true;
                         }
                 //This code is called after recursion - meaning a valid solution was not found down this path
                 if (solution.Count > 1)
@@ -41,7 +53,9 @@ namespace Pegorithm
                     Tuple<Peg, Peg> removed = solution.Pop();
                     PerformMove(removed.Item1, removed.Item2, true);
                 }
+                return false;
             }
+            else return true;
         }
 
         /// <summary>
@@ -77,11 +91,11 @@ namespace Pegorithm
 
         public string SolutionString()
         {
-            string result = "";
+            string result = "Puzzle with slot " + emptyHole + " missing:\r\n";
             List<Tuple<Peg, Peg>> order = solution.ToList();
             for (int i = order.Count - 1; i >= 0; i--)
             {
-                result += "order[i].Item1.Index to order[i].Item2.Index\r\n";
+                result += order[i].Item1.Index + " to " + order[i].Item2.Index + "\r\n";
             }
             result += "=========\r\n";
             return result;
@@ -156,7 +170,7 @@ namespace Pegorithm
 
             result[11].moves = new Dictionary<Peg, Peg>();
             result[11].moves.Add(result[4], result[7]);
-            result[11].moves.Add(result[13], result[11]);
+            result[11].moves.Add(result[13], result[12]);
 
             result[12].moves = new Dictionary<Peg, Peg>();
             result[12].moves.Add(result[3], result[7]);

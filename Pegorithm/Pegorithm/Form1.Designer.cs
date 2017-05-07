@@ -39,9 +39,9 @@
             this.txtResult.Multiline = true;
             this.txtResult.Name = "txtResult";
             this.txtResult.ReadOnly = true;
+            this.txtResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtResult.Size = new System.Drawing.Size(260, 192);
             this.txtResult.TabIndex = 0;
-            this.txtResult.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblTitle
             // 
