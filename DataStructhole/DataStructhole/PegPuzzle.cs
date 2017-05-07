@@ -12,8 +12,12 @@ namespace DataStructhole
         private List<Peg> pegs;
         public Stack<Tuple<Peg, Peg>> solution { get; private set; }
         private List<Peg> empties;
-        private int emptyHole;
+        private static object consoleLock;
 
+        static PegPuzzle()
+        {
+            consoleLock = new object();
+        }
         public PegPuzzle(int startEmpty)
         {
             pegs = CreatePuzzle();
@@ -23,11 +27,16 @@ namespace DataStructhole
             empties[0].empty = true;
         }
 
-        public void SolvePuzzle()
+        public void Solve()
         {
-            if(solution.Count == 14)
+            this.SolvePuzzle();
+        }
+
+        private bool SolvePuzzle()
+        {
+            if(solution.Count == 13)
             {
-                lock (this)
+                lock (consoleLock)
                 {
                     List<Tuple<Peg, Peg>> order = solution.ToList();
                     for (int i = order.Count - 1; i >= 0; i--)
@@ -36,6 +45,7 @@ namespace DataStructhole
                     }
                     Console.WriteLine("=========");
                 }
+                return true;
             }
             else
             {
@@ -45,7 +55,7 @@ namespace DataStructhole
                         if (ValidMove(adjacent, empties[i]))
                         {
                             PerformMove(adjacent, empties[i]);
-                            SolvePuzzle();
+                            if(SolvePuzzle()) return true;
                         }
                 //This code is called after recursion - meaning a valid solution was not found down this path
                 if (solution.Count > 1)
@@ -53,6 +63,7 @@ namespace DataStructhole
                     Tuple<Peg, Peg> removed = solution.Pop();
                     PerformMove(removed.Item1, removed.Item2, true);
                 }
+                return false;
             }
         }
 
@@ -156,7 +167,7 @@ namespace DataStructhole
 
             result[11].moves = new Dictionary<Peg, Peg>();
             result[11].moves.Add(result[4], result[7]);
-            result[11].moves.Add(result[13], result[11]);
+            result[11].moves.Add(result[13], result[12]);
 
             result[12].moves = new Dictionary<Peg, Peg>();
             result[12].moves.Add(result[3], result[7]);
