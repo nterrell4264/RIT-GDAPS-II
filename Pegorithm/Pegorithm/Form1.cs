@@ -27,7 +27,7 @@ namespace Pegorithm
                 Thread thread = new Thread(new ThreadStart(puzzle.Solve));
                 thread.Start();
                 puzzles.Add(new Tuple<PegPuzzle, Thread>(puzzle, thread));
-            };
+            }
             foreach(Tuple<PegPuzzle, Thread> puzzle in puzzles)
             {
                 puzzle.Item2.Join();
